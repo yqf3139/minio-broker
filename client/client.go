@@ -7,6 +7,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/helm/pkg/helm"
+	"fmt"
 )
 
 const (
@@ -19,6 +20,12 @@ func Install(releaseName, namespace string) error {
 	vals, err := yaml.Marshal(map[string]interface{}{
 		"accessKey": uniuri.NewLen(20),
 		"secretKey": uniuri.NewLen(40),
+		"minioConfig": map[string]interface{}{
+			"webhook": map[string]interface{}{
+				"enable": true,
+				"endpoint": "http://service-adapter.fission/minio/" + namespace,
+			},
+		},
 	})
 	if err != nil {
 		return err
