@@ -1,0 +1,7 @@
+apiVersion: servicecatalog.k8s.io/v1alpha1
+kind: Broker
+metadata:
+  name: minio-broker
+  namespace: fission
+spec:
+  url: http://minio-broker-minio-broker.minio-broker.svc.cluster.local
